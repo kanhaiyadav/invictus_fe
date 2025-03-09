@@ -26,7 +26,7 @@ function App() {
     }, []);
 
     return (
-        <div className="h-screen w-full overflow-scroll">
+        <div className="h-screen w-full overflow-scroll overflow-x-hidden">
             <div className="w-full mt-8 select-none">
                 <img
                     src="/icon.png"

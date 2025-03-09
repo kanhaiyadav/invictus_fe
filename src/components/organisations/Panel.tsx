@@ -14,7 +14,17 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import PasswordStrengthMeter from "../shared/PassStrengthMeter";
-
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import Signature from "../shared/Signature";
+import PassEditForm from "./PassEditForm";
+import { toast } from "sonner";
 
 const Panel = ({
     org,
@@ -78,20 +88,65 @@ const Panel = ({
                                 <AccordionContent>
                                     <div className="flex flex-col gap-2">
                                         <div className="flex items-center gap-4">
-                                            <Button
-                                                variant={"secondary"}
-                                                className="text-gray-500"
-                                            >
-                                                <FaRegEdit />
-                                                <span>Edit</span>
-                                            </Button>
-                                            <Button
-                                                variant={"secondary"}
-                                                className="text-gray-500 hover:text-white hover:bg-red-400"
-                                            >
-                                                <BsTrash2 />
-                                                <span>Delete</span>
-                                            </Button>
+                                            <Dialog>
+                                                <DialogTrigger>
+                                                    <Button
+                                                        variant={"secondary"}
+                                                        className="text-gray-500"
+                                                    >
+                                                        <FaRegEdit />
+                                                        <span>Edit</span>
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent className="w-[350px]">
+                                                    <DialogHeader>
+                                                        <Signature />
+                                                    </DialogHeader>
+                                                    <PassEditForm />
+                                                </DialogContent>
+                                            </Dialog>
+                                            <Dialog>
+                                                <DialogTrigger>
+                                                    <Button
+                                                        variant={"secondary"}
+                                                        className="text-gray-500 hover:text-white hover:bg-red-400"
+                                                    >
+                                                        <BsTrash2 />
+                                                        <span>Delete</span>
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent className="w-[300px]">
+                                                    <DialogHeader>
+                                                        <DialogTitle>
+                                                            Are you absolutely
+                                                            sure?
+                                                        </DialogTitle>
+                                                        <DialogDescription>
+                                                            This action cannot
+                                                            be undone. This will
+                                                            permanently delete
+                                                            your account.
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    <div className="w-fit m-auto">
+                                                        <Button
+                                                            variant={
+                                                                "destructive"
+                                                            }
+                                                            className="mr-2"
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                        <Button
+                                                            variant={
+                                                                "secondary"
+                                                            }
+                                                        >
+                                                            Cancel
+                                                        </Button>
+                                                    </div>
+                                                </DialogContent>
+                                            </Dialog>
                                         </div>
 
                                         <div className="bg-accent p-2 px-4 rounded-lg flex items-center gap-4 shadow-sm">
@@ -104,7 +159,14 @@ const Panel = ({
                                                 </p>
                                             </div>
                                             <IoMdEyeOff className="text-xl text-gray-400 cursor-pointer" />
-                                            <IoCopy className="text-lg text-gray-400 cursor-pointer" />
+                                            <IoCopy
+                                                className="text-lg text-gray-400 cursor-pointer"
+                                                onClick={() => {
+                                                    toast(
+                                                        "Password copied to clipboard"
+                                                    );
+                                                }}
+                                            />
                                         </div>
                                         <PasswordStrengthMeter password="hello@12" />
                                         {account.description && (
