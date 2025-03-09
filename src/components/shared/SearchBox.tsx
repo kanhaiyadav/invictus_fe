@@ -1,9 +1,7 @@
-import { dataType } from "@/types";
+// import { dataType } from "@/types";
 import { IoSearch } from "react-icons/io5";
 
-const SearchBox = ({ data }: {
-    data: dataType
-}) => {
+const SearchBox = () => {
     return (
         <div className="flex items-center w-[600px] bg-white border-1 border-gray-300 rounded-full p-1 pl-4 outline-2 outline-primary outline-offset-3 m-auto ">
             <input

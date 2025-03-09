@@ -9,22 +9,25 @@ function App() {
 
     useEffect(() => {
         const getData = async () => {
-            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            res = await res.json();
-            console.log(res);
-            setData(res);
+            const res = await fetch(
+                `${import.meta.env.VITE_BACKEND_URL}/data`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            const json = await res.json();
+            console.log(json);
+            setData(json);
         };
         getData();
     }, []);
 
     return (
         <>
-            <div className="w-full mt-8">
+            <div className="w-full mt-8 select-none">
                 <img
                     src="/icon.png"
                     alt="app logo"
@@ -35,7 +38,7 @@ function App() {
                 </h1>
             </div>
             <div className="w-full bg-gray-200 py-8 sticky top-[0px]">
-                <SearchBox data={data} />
+                <SearchBox />
             </div>
             <Orgnaisations data={data} />
         </>
