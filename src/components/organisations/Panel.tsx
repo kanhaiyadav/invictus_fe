@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiStar } from "react-icons/fi";
 import { GoStarFill } from "react-icons/go";
-import { IoMdEye } from "react-icons/io";
+// import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
 import { BsTrash2 } from "react-icons/bs";
@@ -15,20 +15,6 @@ import {
 } from "@/components/ui/accordion";
 import PasswordStrengthMeter from "../shared/PassStrengthMeter";
 
-const passStrenth = (password: string): number => {
-    let strength = 0;
-    const totalCriteria = 6;
-
-    if (password.length >= 8) strength++; // Basic length check
-    if (password.length >= 12) strength++; // Extra length bonus
-    if (/[a-z]/.test(password)) strength++; // Lowercase letters
-    if (/[A-Z]/.test(password)) strength++; // Uppercase letters
-    if (/\d/.test(password)) strength++; // Numbers
-    if (/[\W_]/.test(password)) strength++; // Special characters
-
-    // Calculate percentage
-    return Math.round((strength / totalCriteria) * 100);
-};
 
 const Panel = ({
     org,

@@ -3,6 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Panel from "./Panel";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { BsPersonAdd } from "react-icons/bs";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import Signature from "../shared/Signature";
+import NewAccountForm from "./NewAccountForm";
+
 
 const OrgnisationCard = ({
     org,
@@ -57,7 +67,7 @@ const OrgnisationCard = ({
             </div>
             {showPanel && (
                 <div
-                    className="bg-black/20 w-screen h-screen fixed top-0 left-0 z-50"
+                    className="bg-black/20 w-screen h-screen fixed top-0 left-0 z-1"
                     onClick={() => setShowPanel(false)}
                 />
             )}
@@ -69,7 +79,7 @@ const OrgnisationCard = ({
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        className="fixed top-0 right-0 w-[500px] h-screen ml-auto bg-white shadow-2xl z-100 flex flex-col"
+                        className="fixed top-0 right-0 w-[500px] h-screen ml-auto bg-white shadow-2xl z-2 flex flex-col"
                     >
                         <div className="w-full p-4">
                             <div
@@ -81,6 +91,19 @@ const OrgnisationCard = ({
                             </div>
                         </div>
                         <Panel org={org} />
+                        <Dialog>
+                            <DialogTrigger>
+                                <div className="p-3 rounded-full bg-primary text-white absolute bottom-4 left-4 cursor-pointer hover:bg-primary-dark transition-all duration-300 shadow-lg">
+                                    <BsPersonAdd className="text-3xl m-auto" />
+                                </div>
+                            </DialogTrigger>
+                            <DialogContent className="w-[350px]">
+                                <DialogHeader>
+                                    <Signature />
+                                </DialogHeader>
+                                <NewAccountForm />
+                            </DialogContent>
+                        </Dialog>
                     </motion.div>
                 )}
             </AnimatePresence>

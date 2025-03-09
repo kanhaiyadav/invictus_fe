@@ -26,7 +26,7 @@ function App() {
     }, []);
 
     return (
-        <>
+        <div className="h-screen w-full overflow-scroll">
             <div className="w-full mt-8 select-none">
                 <img
                     src="/icon.png"
@@ -41,7 +41,7 @@ function App() {
                 <SearchBox />
             </div>
             <Orgnaisations data={data} />
-        </>
+        </div>
     );
 }
 
