@@ -6,7 +6,6 @@ import GlobalContext from "./context/GlobalContext";
 import "./App.css";
 import { Toaster } from "sonner";
 import Options from "./components/Options";
-import Password from "./components/organisations/Password";
 import PasswordGenerator from "./components/PasswordGenerator";
 
 function App() {
@@ -38,7 +37,7 @@ function App() {
                 <PasswordGenerator />
             </div>
             <div className="h-screen w-full">
-                <Options />
+                <Options setVisibleData={setVisibleData} />
                 <Orgnaisations data={visibleData} />
             </div>
             <Toaster position="bottom-left" />

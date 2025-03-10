@@ -12,6 +12,8 @@ const NewAccountForm = ({
     org: {
         title: string;
         domain: string;
+        favourite: boolean;
+        archived: boolean;
         accounts: Array<{
             email: string;
             createdAt: string;

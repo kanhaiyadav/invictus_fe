@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { FiStar } from "react-icons/fi";
-import { GoStarFill } from "react-icons/go";
 import { BsTrash2 } from "react-icons/bs";
 import { Button } from "../ui/button";
 import { FaRegEdit } from "react-icons/fa";
@@ -26,6 +24,8 @@ import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
 import OrgnaisationControls from "./OrgnaisationControls";
 import { toast } from "sonner";
+import Favourite from "../Favourite";
+import Archive from "../Archive";
 
 const Panel = ({
     org,
@@ -33,6 +33,8 @@ const Panel = ({
     org: {
         title: string;
         domain: string;
+        favourite: boolean;
+        archived: boolean;
         accounts: Array<{
             email: string;
             createdAt: string;
@@ -45,8 +47,6 @@ const Panel = ({
     const { setData } = useContext(GlobalContext);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
-    
-    const [starred, setStarred] = useState(false);
 
     const handleDelete = async (account: {
         email: string;
@@ -96,15 +96,9 @@ const Panel = ({
                         {org.domain}
                     </a>
                 </div>
-                <div className="flex gap-4">
-                    <div className="flex items-center gap-2">
-                        <button
-                            className="hover:bg-accent text-xl rounded-lg p-2"
-                            onClick={() => setStarred(!starred)}
-                        >
-                            {starred ? <GoStarFill /> : <FiStar />}
-                        </button>
-                    </div>
+                <div className="flex gap-2 items-center">
+                    <Favourite org={org} size="lg"/>
+                    <Archive org={org} size="lg"/>
                 </div>
             </div>
             

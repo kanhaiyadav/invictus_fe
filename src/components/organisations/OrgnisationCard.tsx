@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Panel from "./Panel";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import Favourite from "../Favourite";
+import Archive from "../Archive";
 
 const OrgnisationCard = ({
     org,
@@ -10,6 +12,8 @@ const OrgnisationCard = ({
     org: {
         title: string;
         domain: string;
+        favourite: boolean;
+        archived: boolean;
         accounts: Array<{
             email: string;
             createdAt: string;
@@ -37,7 +41,7 @@ const OrgnisationCard = ({
     return (
         <>
             <div
-                className="flex flex-col items-center w-full h-fit bg-white shadow-sm rounded-lg p-4 cursor-default hover:outline-2 hover:outline-primary hover:shadow-lg active:scale-95 transition-transform duration-300 select-none"
+                className="flex flex-col items-center w-full h-fit bg-white shadow-sm rounded-lg p-4 cursor-default hover:outline-2 hover:outline-primary hover:shadow-lg active:scale-95 transition-transform duration-300 select-none relative group"
                 onClick={() => setShowPanel(!showPanel)}
             >
                 <img
@@ -55,6 +59,10 @@ const OrgnisationCard = ({
                 >
                     {org.domain}
                 </a>
+                <div className="flex-col w-fit absolute top-2 left-2 group-hover:flex hidden">
+                    <Favourite org={org} />
+                    <Archive org={org} />
+                </div>
             </div>
             {showPanel && (
                 <div
