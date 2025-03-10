@@ -5,6 +5,9 @@ import { dataType } from "./types";
 import GlobalContext from "./context/GlobalContext";
 import "./App.css";
 import { Toaster } from "sonner";
+import Options from "./components/Options";
+import Password from "./components/organisations/Password";
+import PasswordGenerator from "./components/PasswordGenerator";
 
 function App() {
     const { data } = useContext(GlobalContext);
@@ -18,23 +21,27 @@ function App() {
 
     return (
         <>
-            <div className="h-screen w-full overflow-scroll overflow-x-hidden">
-                <div className="w-full mt-8 select-none">
+            <div className="flex items-center justify-between px-[100px]">
+                <div className="flex items-center gap-4 w-fit select-none">
                     <img
                         src="/icon.png"
                         alt="app logo"
-                        className="m-auto h-[150px]"
+                        className="m-auto h-[50px]"
                     />
                     <h1 className="font-iceland text-5xl m-auto font-semibold w-fit text-primary">
                         invictus
                     </h1>
                 </div>
-                <div className="w-full bg-gray-200 py-8 sticky top-[0px]">
+                <div className="grow bg-gray-200 py-8 sticky top-[0px]">
                     <SearchBox data={data} setData={setVisibleData} />
                 </div>
+                <PasswordGenerator />
+            </div>
+            <div className="h-screen w-full">
+                <Options />
                 <Orgnaisations data={visibleData} />
             </div>
-            <Toaster position="bottom-left"/>
+            <Toaster position="bottom-left" />
         </>
     );
 }
