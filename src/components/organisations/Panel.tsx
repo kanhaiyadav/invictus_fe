@@ -24,6 +24,8 @@ import Password from "./Password";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
+import OrgnaisationControls from "./OrgnaisationControls";
+import { toast } from "sonner";
 
 const Panel = ({
     org,
@@ -41,6 +43,8 @@ const Panel = ({
     }) => {
 
     const { setData } = useContext(GlobalContext);
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
     
     const [starred, setStarred] = useState(false);
 
@@ -50,6 +54,7 @@ const Panel = ({
         description?: string;
         createdAt: string;
     }) => {
+
         const res = await fetch(
             `${import.meta.env.VITE_BACKEND_URL}/delete-password`,
             {
@@ -61,7 +66,13 @@ const Panel = ({
             }
         );
         const json = await res.json();
-        setData(json);
+        if (res.ok) {
+            setData(json.data);
+            setDeleteOpen(false);
+            toast.success(json.message);
+        } else {
+            toast.error(json.message);
+        }
     }
     
 
@@ -96,7 +107,12 @@ const Panel = ({
                     </div>
                 </div>
             </div>
+            
+            <OrgnaisationControls org={org} />
+
             <hr className="w-full border-[1px] border-gray-200 my-[25px]" />
+
+
             <div>
                 {
                     <Accordion type="multiple">
@@ -110,13 +126,14 @@ const Panel = ({
                                     </div>
                                 </AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-3">
                                         <div className="flex items-center gap-4">
-                                            <Dialog>
+                                            <Dialog open={editOpen} onOpenChange={setEditOpen}>
                                                 <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
-                                                        className="text-gray-500"
+                                                        className="text-gray-600"
+                                                        onClick={() => setEditOpen(true)}
                                                     >
                                                         <FaRegEdit />
                                                         <span>Edit</span>
@@ -136,14 +153,21 @@ const Panel = ({
                                                             </DialogDescription>
                                                         </VisuallyHidden>
                                                     </DialogHeader>
-                                                    <PassEditForm org={org} account={account}/>
+                                                    <PassEditForm
+                                                        org={org}
+                                                        account={account}
+                                                        closeDialog={() =>
+                                                            setEditOpen(false)
+                                                        }
+                                                    />
                                                 </DialogContent>
                                             </Dialog>
-                                            <Dialog>
+                                            <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
                                                 <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
-                                                        className="text-gray-500 hover:text-white hover:bg-red-400"
+                                                        className="text-gray-600"
+                                                        onClick={() => setDeleteOpen(true)}
                                                     >
                                                         <BsTrash2 />
                                                         <span>Delete</span>
@@ -168,7 +192,11 @@ const Panel = ({
                                                                 "destructive"
                                                             }
                                                             className="mr-2"
-                                                            onClick={() => handleDelete(account)}
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    account
+                                                                )
+                                                            }
                                                         >
                                                             Delete
                                                         </Button>
@@ -176,6 +204,7 @@ const Panel = ({
                                                             variant={
                                                                 "secondary"
                                                             }
+                                                            onClick={() => setDeleteOpen(false)}
                                                         >
                                                             Cancel
                                                         </Button>

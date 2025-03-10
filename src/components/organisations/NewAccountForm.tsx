@@ -3,9 +3,11 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
+import { toast } from "sonner";
 
 const NewAccountForm = ({
     org,
+    closeDialog
 }: {
     org: {
         title: string;
@@ -16,7 +18,8 @@ const NewAccountForm = ({
             description?: string;
             password: string;
         }>;
-    };
+        };
+    closeDialog: () => void;
 }) => {
     const { setData } = useContext(GlobalContext);
 
@@ -47,7 +50,13 @@ const NewAccountForm = ({
             }
         );
         const json = await res.json();
-        setData(json);
+        if (res.ok) {
+            toast.success(json.message);
+            setData(json.data);
+            closeDialog();
+        } else {
+            toast.error(json.message);
+        }
     };
 
     return (

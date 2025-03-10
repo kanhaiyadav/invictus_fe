@@ -2,9 +2,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
+import { toast } from "sonner";
 
 const PassEditForm = ({
-    org, account
+    org, account, closeDialog
 }: {
     org: {
         title: string;
@@ -21,7 +22,8 @@ const PassEditForm = ({
         password: string;
         description?: string;
         createdAt: string;
-    };
+        };
+    closeDialog: () => void;
 }) => {
     const { setData } = useContext(GlobalContext);
 
@@ -41,7 +43,14 @@ const PassEditForm = ({
             }
         );
         const json = await res.json();
-        setData(json);
+        if (res.ok) {
+            setData(json.data);
+            toast.success(json.message);
+            closeDialog();
+        }
+        else {
+            toast.error(json.message);
+        }
     };
 
     return (

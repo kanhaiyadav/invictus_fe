@@ -3,18 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Panel from "./Panel";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { BsPersonAdd } from "react-icons/bs";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import Signature from "../shared/Signature";
-import NewAccountForm from "./NewAccountForm";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-
 
 const OrgnisationCard = ({
     org,
@@ -94,27 +82,6 @@ const OrgnisationCard = ({
                             </div>
                         </div>
                         <Panel org={org} />
-                        <Dialog>
-                            <DialogTrigger>
-                                <div className="p-3 rounded-full bg-primary text-white absolute bottom-4 left-4 cursor-pointer hover:bg-primary-dark transition-all duration-300 shadow-lg">
-                                    <BsPersonAdd className="text-3xl m-auto" />
-                                </div>
-                            </DialogTrigger>
-                            <DialogContent className="w-[350px]">
-                                <DialogHeader>
-                                    <Signature />
-                                    <VisuallyHidden>
-                                        <DialogTitle>
-                                            Add New Account
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            Fill the form below to add a new account
-                                        </DialogDescription>
-                                    </VisuallyHidden>
-                                </DialogHeader>
-                                <NewAccountForm org={org} />
-                            </DialogContent>
-                        </Dialog>
                     </motion.div>
                 )}
             </AnimatePresence>

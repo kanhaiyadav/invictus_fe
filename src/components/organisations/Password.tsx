@@ -37,7 +37,7 @@ const Password = ({
                     className="text-lg text-gray-400 cursor-pointer"
                     onClick={() => {
                         copyToClipboard(password);
-                        toast("Password copied to clipboard");
+                        toast.success("Password copied to clipboard");
                     }}
                 />
             </div>

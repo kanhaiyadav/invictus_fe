@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import GlobalContext from "@/context/GlobalContext";
 import { dataType } from "@/types";
 
-const GlobalProvider = ({ children }: {
-    children: React.ReactNode;
-}) => {
+const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     const [data, setData] = useState<dataType>({ orgs: [] });
 
     useEffect(() => {
@@ -19,13 +17,13 @@ const GlobalProvider = ({ children }: {
                 }
             );
             const json = await res.json();
-            console.log(json);
             setData(json);
         };
         getData();
     }, []);
 
     return (
+        //@ts-expect-error - GlobalContext.Provider value type mismatch
         <GlobalContext.Provider value={{ data, setData }}>
             {children}
         </GlobalContext.Provider>

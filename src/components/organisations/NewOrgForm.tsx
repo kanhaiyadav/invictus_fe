@@ -2,8 +2,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
+import { toast } from "sonner";
 
-const NewOrgForm = () => {
+const NewOrgForm = ({ closeDialog }: {
+    closeDialog: () => void;
+}) => {
 
     const { setData } = useContext(GlobalContext);
     
@@ -19,7 +22,14 @@ const NewOrgForm = () => {
             body: JSON.stringify({ title: orgName, domain: orgDomain }),
         })
         const json = await res.json();
-        setData(json);
+        if (res.ok) {
+            closeDialog();
+            setData(json.data);
+            toast.success(json.message);
+        }
+        else {
+            toast.error(json.message);
+        }
     };
     
     return (
