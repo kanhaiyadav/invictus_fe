@@ -1,31 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import SearchBox from "./components/shared/SearchBox";
 import Orgnaisations from "./components/organisations/Orgnaisations";
 import { dataType } from "./types";
+import GlobalContext from "./context/GlobalContext";
 import "./App.css";
 
 function App() {
-    const [data, setData] = useState<dataType>({ orgs: [] });
+
+    const { data } = useContext(GlobalContext);
+
+    
+    // const [data, setData] = useState<dataType>({ orgs: [] });
     const [visibleData, setVisibleData] = useState<dataType>({ orgs: [] });
 
     useEffect(() => {
-        const getData = async () => {
-            const res = await fetch(
-                `${import.meta.env.VITE_BACKEND_URL}/data`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            const json = await res.json();
-            console.log(json);
-            setData(json);
-            setVisibleData(json);
-        };
-        getData();
-    }, []);
+        setVisibleData(data);
+    }, [data]);
+
 
     return (
         <div className="h-screen w-full overflow-scroll overflow-x-hidden">

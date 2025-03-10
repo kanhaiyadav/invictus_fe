@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import Signature from "../shared/Signature";
 import NewAccountForm from "./NewAccountForm";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 
 const OrgnisationCard = ({
@@ -101,8 +103,16 @@ const OrgnisationCard = ({
                             <DialogContent className="w-[350px]">
                                 <DialogHeader>
                                     <Signature />
+                                    <VisuallyHidden>
+                                        <DialogTitle>
+                                            Add New Account
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            Fill the form below to add a new account
+                                        </DialogDescription>
+                                    </VisuallyHidden>
                                 </DialogHeader>
-                                <NewAccountForm />
+                                <NewAccountForm org={org} />
                             </DialogContent>
                         </Dialog>
                     </motion.div>

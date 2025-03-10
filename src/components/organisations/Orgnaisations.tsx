@@ -5,10 +5,13 @@ import NewOrgForm from "./NewOrgForm";
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogHeader,
+    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import Signature from "../shared/Signature";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const Orgnaisations = ({ data }: { data: dataType }) => {
     return (
@@ -22,8 +25,14 @@ const Orgnaisations = ({ data }: { data: dataType }) => {
                 <DialogContent className="w-[350px]">
                     <DialogHeader>
                         <Signature />
+                        <VisuallyHidden>
+                            <DialogTitle>Add New Organisation</DialogTitle>
+                            <DialogDescription>
+                                Fill the form below to add a new organisation
+                            </DialogDescription>
+                        </VisuallyHidden>
                     </DialogHeader>
-                        <NewOrgForm />
+                    <NewOrgForm />
                 </DialogContent>
             </Dialog>
 

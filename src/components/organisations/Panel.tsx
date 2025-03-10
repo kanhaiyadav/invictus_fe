@@ -21,6 +21,9 @@ import {
 import Signature from "../shared/Signature";
 import PassEditForm from "./PassEditForm";
 import Password from "./Password";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useContext } from "react";
+import GlobalContext from "@/context/GlobalContext";
 
 const Panel = ({
     org,
@@ -35,8 +38,31 @@ const Panel = ({
             password: string;
         }>;
     };
-}) => {
+    }) => {
+
+    const { setData } = useContext(GlobalContext);
+    
     const [starred, setStarred] = useState(false);
+
+    const handleDelete = async (account: {
+        email: string;
+        password: string;
+        description?: string;
+        createdAt: string;
+    }) => {
+        const res = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}/delete-password`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ org: org.title, email: account.email }),
+            }
+        );
+        const json = await res.json();
+        setData(json);
+    }
     
 
     return (
@@ -87,7 +113,7 @@ const Panel = ({
                                     <div className="flex flex-col gap-2">
                                         <div className="flex items-center gap-4">
                                             <Dialog>
-                                                <DialogTrigger>
+                                                <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
                                                         className="text-gray-500"
@@ -99,12 +125,22 @@ const Panel = ({
                                                 <DialogContent className="w-[350px]">
                                                     <DialogHeader>
                                                         <Signature />
+                                                        <VisuallyHidden>
+                                                            <DialogTitle>
+                                                                Edit password
+                                                            </DialogTitle>
+                                                            <DialogDescription>
+                                                                Fill the form
+                                                                below to edit
+                                                                the password
+                                                            </DialogDescription>
+                                                        </VisuallyHidden>
                                                     </DialogHeader>
-                                                    <PassEditForm />
+                                                    <PassEditForm org={org} account={account}/>
                                                 </DialogContent>
                                             </Dialog>
                                             <Dialog>
-                                                <DialogTrigger>
+                                                <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
                                                         className="text-gray-500 hover:text-white hover:bg-red-400"
@@ -132,6 +168,7 @@ const Panel = ({
                                                                 "destructive"
                                                             }
                                                             className="mr-2"
+                                                            onClick={() => handleDelete(account)}
                                                         >
                                                             Delete
                                                         </Button>
