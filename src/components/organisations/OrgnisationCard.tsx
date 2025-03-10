@@ -24,6 +24,7 @@ const OrgnisationCard = ({
             email: string;
             createdAt: string;
             description?: string;
+            password: string;
         }>;
     };
 }) => {

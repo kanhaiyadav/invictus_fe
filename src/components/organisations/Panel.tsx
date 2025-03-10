@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { FiStar } from "react-icons/fi";
 import { GoStarFill } from "react-icons/go";
-// import { IoMdEye } from "react-icons/io";
-import { IoMdEyeOff } from "react-icons/io";
-import { IoCopy } from "react-icons/io5";
 import { BsTrash2 } from "react-icons/bs";
 import { Button } from "../ui/button";
 import { FaRegEdit } from "react-icons/fa";
@@ -13,7 +10,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import PasswordStrengthMeter from "../shared/PassStrengthMeter";
 import {
     Dialog,
     DialogContent,
@@ -24,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import Signature from "../shared/Signature";
 import PassEditForm from "./PassEditForm";
-import { toast } from "sonner";
+import Password from "./Password";
 
 const Panel = ({
     org,
@@ -36,10 +32,12 @@ const Panel = ({
             email: string;
             createdAt: string;
             description?: string;
+            password: string;
         }>;
     };
 }) => {
     const [starred, setStarred] = useState(false);
+    
 
     return (
         <div className="w-full grow px-8">
@@ -148,27 +146,7 @@ const Panel = ({
                                                 </DialogContent>
                                             </Dialog>
                                         </div>
-
-                                        <div className="bg-accent p-2 px-4 rounded-lg flex items-center gap-4 shadow-sm">
-                                            <div className="flex-grow">
-                                                <h1 className="text-sm">
-                                                    Password
-                                                </h1>
-                                                <p className="mt-2 text-lg">
-                                                    **********
-                                                </p>
-                                            </div>
-                                            <IoMdEyeOff className="text-xl text-gray-400 cursor-pointer" />
-                                            <IoCopy
-                                                className="text-lg text-gray-400 cursor-pointer"
-                                                onClick={() => {
-                                                    toast(
-                                                        "Password copied to clipboard"
-                                                    );
-                                                }}
-                                            />
-                                        </div>
-                                        <PasswordStrengthMeter password="hello@12" />
+                                        <Password account={account} />
                                         {account.description && (
                                             <div className="px-1">
                                                 <div className="flex justify-between items-center w-full">

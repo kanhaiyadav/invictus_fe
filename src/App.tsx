@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
     const [data, setData] = useState<dataType>({ orgs: [] });
+    const [visibleData, setVisibleData] = useState<dataType>({ orgs: [] });
 
     useEffect(() => {
         const getData = async () => {
@@ -21,6 +22,7 @@ function App() {
             const json = await res.json();
             console.log(json);
             setData(json);
+            setVisibleData(json);
         };
         getData();
     }, []);
@@ -38,9 +40,9 @@ function App() {
                 </h1>
             </div>
             <div className="w-full bg-gray-200 py-8 sticky top-[0px]">
-                <SearchBox />
+                <SearchBox data={data} setData={setVisibleData} />
             </div>
-            <Orgnaisations data={data} />
+            <Orgnaisations data={visibleData} />
         </div>
     );
 }
