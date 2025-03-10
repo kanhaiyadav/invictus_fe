@@ -10,6 +10,8 @@ const GlobalContext = createContext<{
             {
                 title: "",
                 domain: "",
+                favourite: false,
+                archived: false,
                 accounts: [{ email: "", password: "", createdAt: "" }],
             },
         ],
