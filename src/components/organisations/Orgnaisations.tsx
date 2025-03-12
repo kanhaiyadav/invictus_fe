@@ -21,7 +21,7 @@ const Orgnaisations = ({ data }: { data: dataType }) => {
     return (
         <div className="w-full px-[100px] py-[10px] h-fit grid grid-cols-4 gap-6">
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger className="h-full">
+                <DialogTrigger className="h-full min-h-[175px]">
                     <div className="bg-black/10 h-full rounded-lg flex items-center justify-center hover:outline-primary hover:outline-2 active:scale-90 transition-transform duration-300 shadow-sm select-none"
                      onClick={() => setOpen(true)}
                     >

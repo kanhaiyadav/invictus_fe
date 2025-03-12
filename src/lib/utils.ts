@@ -1,7 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import CryptoJs from "crypto-js"
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -37,8 +35,4 @@ export const generateStrongPassword = (length = 12) => {
 
 export const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-}
-
-export const decrypt = (cipherText: string, key: string) => {
-    return CryptoJs.AES.decrypt(cipherText, key).toString(CryptoJs.enc.Utf8);
 }

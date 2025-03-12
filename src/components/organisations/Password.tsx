@@ -1,5 +1,4 @@
 import { IoMdEye } from "react-icons/io";
-import { decrypt } from "@/lib/utils";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "sonner";
@@ -15,7 +14,7 @@ const Password = ({
     };
 }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const password = decrypt(account.password, import.meta.env.VITE_SECRET_KEY);
+    const password = account.password;
 
     return (
         <>
