@@ -36,9 +36,11 @@ function App() {
                 </div>
                 <PasswordGenerator />
             </div>
-            <div className="h-screen w-full">
+            <div className="h-screen w-full flex flex-col">
                 <Options setVisibleData={setVisibleData} />
-                <Orgnaisations data={visibleData} />
+                <div className="grow overflow-auto pb-[150px]">
+                    <Orgnaisations data={visibleData} />
+                </div>
             </div>
             <Toaster position="bottom-left" />
         </>
