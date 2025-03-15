@@ -49,12 +49,16 @@ const OrgnisationCard = ({
                     className="h-[80px] w-[80px] rounded-lg"
                     alt=""
                 />
-                <h1 className="text-2xl font-semibold text-gray-600 mt-2">
+                <h1 className={`text-2xl font-semibold text-gray-600 mt-2
+                    overflow-hidden overflow-ellipsis w-full text-center
+                    `}>
                     {org.title}
                 </h1>
                 <a
                     href={org.domain}
-                    className="text-gray-500 hover:text-primary hover:underline underline-offset-2 cursor-pointer"
+                    className={`text-gray-500 hover:text-primary hover:underline underline-offset-2 cursor-pointer
+                        whitespace-nowrap overflow-hidden overflow-ellipsis w-full text-center
+                        `}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {org.domain}

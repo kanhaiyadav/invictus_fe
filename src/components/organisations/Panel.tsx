@@ -78,34 +78,34 @@ const Panel = ({
 
     return (
         <div className="w-full grow px-8">
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-full">
                 <img
                     src={`https://www.google.com/s2/favicons?sz=128&domain=${org.domain}`}
                     className="h-[60px] w-[60px] rounded-lg"
                     alt="organisation logo"
                 />
-                <div className="grow">
+                <div className="grow max-w-[264px]">
                     <h1 className="text-2xl font-semibold text-gray-600">
                         {org.title}
                     </h1>
                     <a
                         href={org.domain}
-                        className="text-gray-500 hover:text-primary hover:underline underline-offset-2 cursor-pointer"
+                        className="text-gray-500 hover:text-primary hover:underline underline-offset-2 cursor-pointer
+        whitespace-nowrap overflow-hidden text-ellipsis w-full inline-block"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {org.domain}
                     </a>
                 </div>
                 <div className="flex gap-2 items-center">
-                    <Favourite org={org} size="lg"/>
-                    <Archive org={org} size="lg"/>
+                    <Favourite org={org} size="lg" />
+                    <Archive org={org} size="lg" />
                 </div>
             </div>
-            
+
             <OrgnaisationControls org={org} />
 
             <hr className="w-full border-[1px] border-gray-200 my-[25px]" />
-
 
             <div>
                 {
@@ -122,12 +122,17 @@ const Panel = ({
                                 <AccordionContent>
                                     <div className="flex flex-col gap-3">
                                         <div className="flex items-center gap-4">
-                                            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+                                            <Dialog
+                                                open={editOpen}
+                                                onOpenChange={setEditOpen}
+                                            >
                                                 <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
                                                         className="text-gray-600"
-                                                        onClick={() => setEditOpen(true)}
+                                                        onClick={() =>
+                                                            setEditOpen(true)
+                                                        }
                                                     >
                                                         <FaRegEdit />
                                                         <span>Edit</span>
@@ -156,12 +161,17 @@ const Panel = ({
                                                     />
                                                 </DialogContent>
                                             </Dialog>
-                                            <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+                                            <Dialog
+                                                open={deleteOpen}
+                                                onOpenChange={setDeleteOpen}
+                                            >
                                                 <DialogTrigger asChild>
                                                     <Button
                                                         variant={"secondary"}
                                                         className="text-gray-600"
-                                                        onClick={() => setDeleteOpen(true)}
+                                                        onClick={() =>
+                                                            setDeleteOpen(true)
+                                                        }
                                                     >
                                                         <BsTrash2 />
                                                         <span>Delete</span>
@@ -198,7 +208,11 @@ const Panel = ({
                                                             variant={
                                                                 "secondary"
                                                             }
-                                                            onClick={() => setDeleteOpen(false)}
+                                                            onClick={() =>
+                                                                setDeleteOpen(
+                                                                    false
+                                                                )
+                                                            }
                                                         >
                                                             Cancel
                                                         </Button>
