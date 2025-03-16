@@ -51,8 +51,9 @@ const PasswordGenerator = () => {
     }
 
     const handleClick = () => {
-        setPassword(generatePassword(length));
-        copyToClipboard(password);
+        const newPassword = generatePassword(length);
+        setPassword(newPassword);
+        copyToClipboard(newPassword);
         toast("Password copied to clipboard");
     };
 

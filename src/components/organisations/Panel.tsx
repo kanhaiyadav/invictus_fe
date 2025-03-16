@@ -42,8 +42,7 @@ const Panel = ({
             password: string;
         }>;
     };
-    }) => {
-
+}) => {
     const { setData } = useContext(GlobalContext);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -54,7 +53,6 @@ const Panel = ({
         description?: string;
         createdAt: string;
     }) => {
-
         const res = await fetch(
             `${import.meta.env.VITE_BACKEND_URL}/delete-password`,
             {
@@ -73,8 +71,7 @@ const Panel = ({
         } else {
             toast.error(json.message);
         }
-    }
-    
+    };
 
     return (
         <div className="w-full grow px-8">
@@ -106,142 +103,186 @@ const Panel = ({
             <OrgnaisationControls org={org} />
 
             <hr className="w-full border-[1px] border-gray-200 my-[25px]" />
-
-            <div>
-                {
-                    <Accordion type="multiple">
-                        {org.accounts.map((account, index) => (
-                            <AccordionItem key={index} value={`item-${index}`}>
-                                <AccordionTrigger>
-                                    <div className="flex justify-between items-center">
-                                        <h1 className="text-lg font-semibold text-gray-600">
-                                            {account.email}
-                                        </h1>
-                                    </div>
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex items-center gap-4">
-                                            <Dialog
-                                                open={editOpen}
-                                                onOpenChange={setEditOpen}
-                                            >
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        variant={"secondary"}
-                                                        className="text-gray-600"
-                                                        onClick={() =>
-                                                            setEditOpen(true)
-                                                        }
-                                                    >
-                                                        <FaRegEdit />
-                                                        <span>Edit</span>
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <DialogContent className="w-[350px]">
-                                                    <DialogHeader>
-                                                        <Signature />
-                                                        <VisuallyHidden>
-                                                            <DialogTitle>
-                                                                Edit password
-                                                            </DialogTitle>
-                                                            <DialogDescription>
-                                                                Fill the form
-                                                                below to edit
-                                                                the password
-                                                            </DialogDescription>
-                                                        </VisuallyHidden>
-                                                    </DialogHeader>
-                                                    <PassEditForm
-                                                        org={org}
-                                                        account={account}
-                                                        closeDialog={() =>
-                                                            setEditOpen(false)
-                                                        }
-                                                    />
-                                                </DialogContent>
-                                            </Dialog>
-                                            <Dialog
-                                                open={deleteOpen}
-                                                onOpenChange={setDeleteOpen}
-                                            >
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        variant={"secondary"}
-                                                        className="text-gray-600"
-                                                        onClick={() =>
-                                                            setDeleteOpen(true)
-                                                        }
-                                                    >
-                                                        <BsTrash2 />
-                                                        <span>Delete</span>
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <DialogContent className="w-[300px]">
-                                                    <DialogHeader>
-                                                        <DialogTitle>
-                                                            Are you absolutely
-                                                            sure?
-                                                        </DialogTitle>
-                                                        <DialogDescription>
-                                                            This action cannot
-                                                            be undone. This will
-                                                            permanently delete
-                                                            your account.
-                                                        </DialogDescription>
-                                                    </DialogHeader>
-                                                    <div className="w-fit m-auto">
-                                                        <Button
-                                                            variant={
-                                                                "destructive"
-                                                            }
-                                                            className="mr-2"
-                                                            onClick={() =>
-                                                                handleDelete(
-                                                                    account
-                                                                )
-                                                            }
-                                                        >
-                                                            Delete
-                                                        </Button>
-                                                        <Button
-                                                            variant={
-                                                                "secondary"
-                                                            }
-                                                            onClick={() =>
-                                                                setDeleteOpen(
-                                                                    false
-                                                                )
-                                                            }
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </DialogContent>
-                                            </Dialog>
-                                        </div>
-                                        <Password account={account} />
-                                        {account.description && (
-                                            <div className="px-1">
-                                                <div className="flex justify-between items-center w-full">
-                                                    <h1 className="text-sm font-semibold">
-                                                        Note
-                                                    </h1>
-                                                    <p className="text-gray-500 ml-auto">
-                                                        {account.createdAt}
-                                                    </p>
-                                                </div>
-                                                <p className="text-gray-500">
-                                                    {account.description}
-                                                </p>
+            <div className="max-h-[538px] overflow-auto overflow-x-hidden no-scrollbar">
+                {org.accounts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-[300px] gap-2">
+                        <img src="/no-data.png" alt="" className="w-[60px]"/>
+                        <h1 className="text-lg text-gray-500">
+                            No accounts found
+                        </h1>
+                    </div>
+                ) : (
+                    <div>
+                        {
+                            <Accordion type="multiple">
+                                {org.accounts.map((account, index) => (
+                                    <AccordionItem
+                                        key={index}
+                                        value={`item-${index}`}
+                                    >
+                                        <AccordionTrigger>
+                                            <div className="flex justify-between items-center">
+                                                <h1 className="text-lg font-semibold text-gray-600">
+                                                    {account.email}
+                                                </h1>
                                             </div>
-                                        )}
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                }
+                                        </AccordionTrigger>
+                                        <AccordionContent>
+                                            <div className="flex flex-col gap-3">
+                                                <div className="flex items-center gap-4">
+                                                    <Dialog
+                                                        open={editOpen}
+                                                        onOpenChange={
+                                                            setEditOpen
+                                                        }
+                                                    >
+                                                        <DialogTrigger asChild>
+                                                            <Button
+                                                                variant={
+                                                                    "secondary"
+                                                                }
+                                                                className="text-gray-600"
+                                                                onClick={() =>
+                                                                    setEditOpen(
+                                                                        true
+                                                                    )
+                                                                }
+                                                            >
+                                                                <FaRegEdit />
+                                                                <span>
+                                                                    Edit
+                                                                </span>
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="w-[350px]">
+                                                            <DialogHeader>
+                                                                <Signature />
+                                                                <VisuallyHidden>
+                                                                    <DialogTitle>
+                                                                        Edit
+                                                                        password
+                                                                    </DialogTitle>
+                                                                    <DialogDescription>
+                                                                        Fill the
+                                                                        form
+                                                                        below to
+                                                                        edit the
+                                                                        password
+                                                                    </DialogDescription>
+                                                                </VisuallyHidden>
+                                                            </DialogHeader>
+                                                            <PassEditForm
+                                                                org={org}
+                                                                account={
+                                                                    account
+                                                                }
+                                                                closeDialog={() =>
+                                                                    setEditOpen(
+                                                                        false
+                                                                    )
+                                                                }
+                                                            />
+                                                        </DialogContent>
+                                                    </Dialog>
+                                                    <Dialog
+                                                        open={deleteOpen}
+                                                        onOpenChange={
+                                                            setDeleteOpen
+                                                        }
+                                                    >
+                                                        <DialogTrigger asChild>
+                                                            <Button
+                                                                variant={
+                                                                    "secondary"
+                                                                }
+                                                                className="text-gray-600"
+                                                                onClick={() =>
+                                                                    setDeleteOpen(
+                                                                        true
+                                                                    )
+                                                                }
+                                                            >
+                                                                <BsTrash2 />
+                                                                <span>
+                                                                    Delete
+                                                                </span>
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="w-[300px]">
+                                                            <DialogHeader>
+                                                                <DialogTitle>
+                                                                    Are you
+                                                                    absolutely
+                                                                    sure?
+                                                                </DialogTitle>
+                                                                <DialogDescription>
+                                                                    This action
+                                                                    cannot be
+                                                                    undone. This
+                                                                    will
+                                                                    permanently
+                                                                    delete your
+                                                                    account.
+                                                                </DialogDescription>
+                                                            </DialogHeader>
+                                                            <div className="w-fit m-auto">
+                                                                <Button
+                                                                    variant={
+                                                                        "destructive"
+                                                                    }
+                                                                    className="mr-2"
+                                                                    onClick={() =>
+                                                                        handleDelete(
+                                                                            account
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Delete
+                                                                </Button>
+                                                                <Button
+                                                                    variant={
+                                                                        "secondary"
+                                                                    }
+                                                                    onClick={() =>
+                                                                        setDeleteOpen(
+                                                                            false
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Cancel
+                                                                </Button>
+                                                            </div>
+                                                        </DialogContent>
+                                                    </Dialog>
+                                                </div>
+                                                <Password account={account} />
+                                                {account.description && (
+                                                    <div className="px-1">
+                                                        <div className="flex justify-between items-center w-full">
+                                                            <h1 className="text-sm font-semibold">
+                                                                Note
+                                                            </h1>
+                                                            <p className="text-gray-500 ml-auto">
+                                                                {
+                                                                    account.createdAt
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <p className="text-gray-500">
+                                                            {
+                                                                account.description
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        }
+                    </div>
+                )}
             </div>
         </div>
     );
